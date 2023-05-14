@@ -4,17 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3514b925-c024-4c04-9005-ede428dd8ae5" name="Changes" comment="git commit -m &quot;first commit&quot;">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/promineotech/projects/dao/ProjectDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/promineotech/projects/entity/Category.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/promineotech/projects/entity/Material.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/promineotech/projects/entity/Project.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/promineotech/projects/entity/Step.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/promineotech/projects/service/ProjectService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/provided/util/DaoBase.java" afterDir="false" />
+    <list default="true" id="3514b925-c024-4c04-9005-ede428dd8ae5" name="Changes" comment="git commit -m &quot;Week 9&quot;">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/promineotech/projects/ProjectsApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/promineotech/projects/ProjectsApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/promineotech/projects/dao/ProjectDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/promineotech/projects/dao/ProjectDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/promineotech/projects/entity/Project.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/promineotech/projects/entity/Project.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/promineotech/projects/service/ProjectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/promineotech/projects/service/ProjectService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/provided/util/DaoBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/provided/util/DaoBase.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,11 +108,19 @@
       <option name="project" value="LOCAL" />
       <updated>1682818032556</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="git commit -m &quot;Week 9&quot;">
+      <created>1683408743938</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1683408743938</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="git commit -m &quot;first commit&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="git commit -m &quot;first commit&quot;" />
+    <MESSAGE value="git commit -m &quot;Week 9&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="git commit -m &quot;Week 9&quot;" />
   </component>
 </project>

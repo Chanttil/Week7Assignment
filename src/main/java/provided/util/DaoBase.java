@@ -2,7 +2,7 @@
  *
  */
 package provided.util;
-//​
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
@@ -17,7 +17,7 @@ import java.sql.Types;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Objects;
-//​
+
 /**
  * This class contains utility methods for the DAO class.
  *
@@ -36,7 +36,7 @@ public abstract class DaoBase {
     protected void startTransaction(Connection conn) throws SQLException {
         conn.setAutoCommit(false);
     }
-//​
+
     /**
      * Commit the transaction. This will write all the changes, if any, to the database.
      *
@@ -46,7 +46,7 @@ public abstract class DaoBase {
     protected void commitTransaction(Connection conn) throws SQLException {
         conn.commit();
     }
-//​
+
     /**
      * Rolls back the changes so that nothing is committed.
      *
@@ -56,7 +56,7 @@ public abstract class DaoBase {
     protected void rollbackTransaction(Connection conn) throws SQLException {
         conn.rollback();
     }
-//​
+
     /**
      * This sets a parameter on a prepared statement. If the parameter is null, it is handled
      * correctly.
@@ -74,7 +74,7 @@ public abstract class DaoBase {
     protected void setParameter(PreparedStatement stmt, int parameterIndex, Object value,
                                 Class<?> classType) throws SQLException {
         int sqlType = convertJavaClassToSqlType(classType);
-//​
+
         if(Objects.isNull(value)) {
             stmt.setNull(parameterIndex, sqlType);
         }
@@ -83,29 +83,29 @@ public abstract class DaoBase {
                 case Types.DECIMAL:
                     stmt.setBigDecimal(parameterIndex, (BigDecimal)value);
                     break;
-//​
+
                 case Types.DOUBLE:
                     stmt.setDouble(parameterIndex, (Double)value);
                     break;
-//​
+
                 case Types.INTEGER:
                     stmt.setInt(parameterIndex, (Integer)value);
                     break;
-//​
+
                 case Types.OTHER:
                     stmt.setObject(parameterIndex, value);
                     break;
-//​
+
                 case Types.VARCHAR:
                     stmt.setString(parameterIndex, (String)value);
                     break;
-//​
+
                 default:
                     throw new DaoException("Unknown parameter type: " + classType);
             }
         }
     }
-//​
+
     /**
      * Converts from a Java class to a java.sql.Types value.
      *
@@ -116,26 +116,26 @@ public abstract class DaoBase {
         if(Integer.class.equals(classType)) {
             return Types.INTEGER;
         }
-//​
+
         if(String.class.equals(classType)) {
             return Types.VARCHAR;
         }
-//​
+
         if(Double.class.equals(classType)) {
             return Types.DOUBLE;
         }
-//​
+
         if(BigDecimal.class.equals(classType)) {
             return Types.DECIMAL;
         }
-//​
+
         if(LocalTime.class.equals(classType)) {
             return Types.OTHER;
         }
-//​
+
         throw new DaoException("Unsupported class type: " + classType.getName());
     }
-//​
+
     /**
      * This retrieves the number of child rows and adds one to the value. It is used to set the order
      * of a child row. For a *real* application, a more sophisticated approach is desired. This method
@@ -151,20 +151,20 @@ public abstract class DaoBase {
     protected Integer getNextSequenceNumber(Connection conn, Integer id, String tableName,
                                             String idName) throws SQLException {
         String sql = "SELECT COUNT(*) FROM " + tableName + " WHERE " + idName + " = ?";
-//​
+
         try(PreparedStatement stmt = conn.prepareStatement(sql)) {
             setParameter(stmt, 1, id, Integer.class);
-//​
+
             try(ResultSet rs = stmt.executeQuery()) {
                 if(rs.next()) {
                     return rs.getInt(1) + 1;
                 }
-//​
+
                 return 1;
             }
         }
     }
-//​
+
     /**
      * This returns the integer primary key value of the last row inserted into the given table. It
      * allows the ID to be inserted into the entity object after inserting it into the table.
@@ -180,18 +180,18 @@ public abstract class DaoBase {
      */
     protected Integer getLastInsertId(Connection conn, String table) throws SQLException {
         String sql = String.format("SELECT LAST_INSERT_ID() FROM %s", table);
-//​
+
         try(Statement stmt = conn.createStatement()) {
             try(ResultSet rs = stmt.executeQuery(sql)) {
                 if(rs.next()) {
                     return rs.getInt(1);
                 }
-//​
+
                 throw new SQLException("Unable to retrieve the primary key value. No result set!");
             }
         }
     }
-//​
+
     /**
      * This extracts an object of the given type from a result set. The object must have a
      * zero-argument constructor. It builds an object from a result set using reflection as follows:
@@ -235,19 +235,19 @@ public abstract class DaoBase {
             /* Obtain the constructor and create an object of the correct type. */
             Constructor<T> con = classType.getConstructor();
             T obj = con.newInstance();
-//​
+
             /* Get the list of fields and loop through them. */
             for(Field field : classType.getDeclaredFields()) {
                 String colName = camelCaseToSnakeCase(field.getName());
                 Class<?> fieldType = field.getType();
-//​
+
                 /*
                  * Set the field accessible flag which means that we can populate even private fields
                  * without using the setter.
                  */
                 field.setAccessible(true);
                 Object fieldValue = null;
-//​
+
                 try {
                     fieldValue = rs.getObject(colName);
                 }
@@ -257,7 +257,7 @@ public abstract class DaoBase {
                      * any action.
                      */
                 }
-//​
+
                 /*
                  * Only set the value in the object if there is a value with the same name in the result
                  * set. This will preserve instance variables (like lists) that are assigned values when the
@@ -273,19 +273,19 @@ public abstract class DaoBase {
                     else if(fieldValue instanceof Timestamp && fieldType.equals(LocalDateTime.class)) {
                         fieldValue = ((Timestamp)fieldValue).toLocalDateTime();
                     }
-//​
+
                     field.set(obj, fieldValue);
                 }
             }
-//​
+
             return obj;
-//​
+
         }
         catch(Exception e) {
             throw new DaoException("Unable to create object of type " + classType.getName(), e);
         }
     }
-//​
+
     /**
      * This converts a camel case value (rowInsertTime) to snake case (row_insert_time).
      *
@@ -294,7 +294,7 @@ public abstract class DaoBase {
      */
     private String camelCaseToSnakeCase(String identifier) {
         StringBuilder nameBuilder = new StringBuilder();
-//​
+
         for(char ch : identifier.toCharArray()) {
             if(Character.isUpperCase(ch)) {
                 nameBuilder.append('_').append(Character.toLowerCase(ch));
@@ -303,10 +303,10 @@ public abstract class DaoBase {
                 nameBuilder.append(ch);
             }
         }
-//​
+
         return nameBuilder.toString();
     }
-//​
+
     /**
      * This class declares the exception throw by the {@link DaoBase} class. It is a thin wrapper for
      * {@link RuntimeException}.
@@ -316,7 +316,7 @@ public abstract class DaoBase {
      */
     @SuppressWarnings("serial")
     static class DaoException extends RuntimeException {
-//​
+
         /**
          * @param message
          * @param cause
@@ -324,7 +324,7 @@ public abstract class DaoBase {
         public DaoException(String message, Throwable cause) {
             super(message, cause);
         }
-//​
+
         /**
          * @param message
          */
