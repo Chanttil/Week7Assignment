@@ -6,6 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="3514b925-c024-4c04-9005-ede428dd8ae5" name="Changes" comment="git commit -m &quot;Week 10 Possible mistakes testing&quot;">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/promineotech/projects/ProjectsApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/promineotech/projects/ProjectsApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/promineotech/projects/dao/ProjectDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/promineotech/projects/dao/ProjectDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/promineotech/projects/service/ProjectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/promineotech/projects/service/ProjectService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,6 +122,17 @@
     </task>
     <option name="localTasksCounter" value="5" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="git commit -m &quot;first commit&quot;" />

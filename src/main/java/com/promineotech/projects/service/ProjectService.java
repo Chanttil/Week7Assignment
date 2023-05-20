@@ -2,6 +2,7 @@ package com.promineotech.projects.service;
 
 import com.promineotech.projects.dao.ProjectDao;
 import com.promineotech.projects.entity.Project;
+import com.promineotech.projects.exception.DbException;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -25,5 +26,18 @@ public class ProjectService {
 
         return projectDao.fetchProjectById(projectId).orElseThrow(() -> new NoSuchElementException(
                 "Project with project ID=" + projectId + "does not exist."));
+    }
+
+    public void modifyProjectDetails(Project project) {                  //checks if project exist
+        if (!projectDao.modifyProjectDetails(project)) {
+            throw new DbException("Project with ID="
+                    + project.getProjectId() + " does not exist");
+        }
+    }
+
+    public void deleteProject(Integer projectId) {                      //checks if project exist
+        if (!projectDao.deleteProject(projectId)) {
+            throw new DbException("Project with ID=" + projectId + " does not exist.");
+        }
     }
 }

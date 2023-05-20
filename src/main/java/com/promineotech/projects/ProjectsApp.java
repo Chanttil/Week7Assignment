@@ -10,29 +10,31 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class ProjectsApp {
-        private Scanner scanner = new Scanner(System.in);                       //Step 2
+        private Scanner scanner = new Scanner(System.in);
         private ProjectService projectService = new ProjectService();
         private Project curProject;
 
         //@formatter:off
-        private List<String> operations = List.of(                              //Step 1
+        private List<String> operations = List.of(                              //The List of available operations
                 "1) Add a Project",
-                "2) List Projects",                                                //w10.1
-                "3) Select a Project"
+                "2) List Projects",
+                "3) Select a Project",
+                "4) Update project details",
+                "5) Delete a project"
         );
         //@formatter:on
 
-        public static void main(String[] args) {                                //Step 3
+        public static void main(String[] args) {
             new ProjectsApp().processUserSelections();
         }
 
         private void processUserSelections(){
-            boolean done = false;                                               //Step 4
+            boolean done = false;
 
 
-            while (!done){                                                      //Step 5
+            while (!done){
                 try {
-                    int selection = getUserSelection();                         //Step 11
+                    int selection = getUserSelection();
                     switch (selection) {
                         case -1:
                             done = exitMenu();
@@ -42,12 +44,21 @@ public class ProjectsApp {
                             createProject();
                             break;
 
-                        case 2:                                                 //w10.2
+                        case 2:
                             listProjects();
                             break;
 
                         case 3:
                             selectProject();
+                            break;
+                            
+                        case 4:
+                            updateProjectDetails();
+                            break;
+
+                        case 5:
+                            deleteProject();
+                            break;
 
                         default:
                             System.out.println("\n" + selection + " is not valid. Try again");
@@ -59,7 +70,51 @@ public class ProjectsApp {
             }
         }
 
-    private void selectProject() {
+    private void deleteProject() {
+            listProjects();
+            Integer projectId = getIntInput("Enter the ID of the project to delete");    //Gets input from user
+
+            projectService.deleteProject(projectId);
+            System.out.println("Project " + projectId + " was deleted successfully.");          //Deletes and notify
+                                                                                                //user of deletion
+            if (Objects.nonNull(curProject) && curProject.getProjectId().equals(projectId)) {
+                curProject = null;
+            }
+    }
+
+    private void updateProjectDetails() {                                    //Updates a project selected by the user
+        if (Objects.isNull(curProject)) {
+            System.out.println("\nPlease select a project.");
+            return;
+        }
+        String projectName =
+                getStringInput("Enter the project name [" + curProject.getProjectName() + "]");
+        BigDecimal estimatedHours =
+                getDecimalInput("Enter the estimated hours [" + curProject.getEstimatedHours() + "]");
+        BigDecimal actualHours =
+                getDecimalInput("Enter the actual hours [" + curProject.getActualHours() + "]");
+        Integer difficulty =
+                getIntInput("Enter the project difficulty (1-5) [" + curProject.getActualHours() + "]");
+        String notes =
+                getStringInput("Enter the project notes [" + curProject.getNotes() + "]");
+
+        Project project = new Project();
+
+        project.setProjectId(curProject.getProjectId());
+        project.setProjectName(Objects.isNull(projectName)
+         ? curProject.getProjectName() : projectName);
+        project.setEstimatedHours(
+                Objects.isNull(estimatedHours) ? curProject.getEstimatedHours() : estimatedHours);
+        project.setActualHours(Objects.isNull(actualHours) ? curProject.getActualHours() : actualHours);
+        project.setDifficulty(Objects.isNull(difficulty) ? curProject.getDifficulty() : difficulty);
+        project.setNotes(Objects.isNull(notes) ? curProject.getNotes() : notes);
+
+        projectService.modifyProjectDetails(project);
+
+        curProject = projectService.fetchProjectById(curProject.getProjectId());
+    }
+
+    private void selectProject() {                                           //allows user to select a project to modify
             listProjects();
             Integer projectId = getIntInput("Enter a project ID to select a project");
 
@@ -68,7 +123,7 @@ public class ProjectsApp {
             curProject = projectService.fetchProjectById(projectId);
     }
 
-    private void listProjects() {                                                   //w10.3
+    private void listProjects() {                                                   //Prints out all available projects
             List<Project> projects = projectService.fetchAllProjects();
 
         System.out.println("\nProjects:");
@@ -77,7 +132,7 @@ public class ProjectsApp {
                 .println("   " + project.getProjectId() + ": " + project.getProjectName()));
     }
 
-    private void createProject() {                                      //Step 12
+    private void createProject() {                                      //Gets input from user and creates projects
             String projectName = getStringInput("Enter the project name");
             BigDecimal estimatedHours = getDecimalInput("Enter the estimated hours");
             BigDecimal actualHours = getDecimalInput("Enter the actual hours");
@@ -96,12 +151,12 @@ public class ProjectsApp {
             System.out.println("You have successfully created project: " + dbProject);
         }
 
-        private boolean exitMenu() {
+        private boolean exitMenu() {                                             //Exits menu upon Enter being pressed
             System.out.println("\nExiting the menu.");
             return true;
         }
 
-        private int getUserSelection() {                                         //Step 6
+        private int getUserSelection() {                                         //Gets the users selection of operation
             printOperations();
             Integer input = getIntInput("\nEnter a menu selection");
 
@@ -122,7 +177,7 @@ public class ProjectsApp {
                 System.out.println("\nYou are working with project: " + curProject);
             }
         }
-        private Integer getIntInput(String prompt) {                             //Steps 9
+        private Integer getIntInput(String prompt) {                             //Get Integer inputs from users
             String input = getStringInput(prompt);
 
             if (Objects.isNull(input)){
@@ -135,7 +190,7 @@ public class ProjectsApp {
                 throw new DbException(input + " is not a valid number.");
             }
         }
-        private BigDecimal getDecimalInput(String prompt) {                    //Step 13
+        private BigDecimal getDecimalInput(String prompt) {                    //Get a decimal input from users
             String input = getStringInput(prompt);
 
             if (Objects.isNull(input)){
@@ -149,7 +204,7 @@ public class ProjectsApp {
             }
         }
 
-        private String getStringInput(String prompt) {                      //Steps 10
+        private String getStringInput(String prompt) {                      //Get a string input from users
             System.out.print(prompt + ": ");
             String input = scanner.nextLine();
             return input.isBlank() ? null : input.trim();
